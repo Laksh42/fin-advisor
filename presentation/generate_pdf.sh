@@ -14,16 +14,27 @@ else
     exit 1
 fi
 
-# Get the absolute path of the HTML file
-HTML_FILE="$(pwd)/financial_advisor_presentation.html"
-PDF_FILE="$(pwd)/financial_advisor_presentation.pdf"
+# Get the absolute path of the HTML files
+PRESENTATION_HTML="$(pwd)/presentation/financial_advisor_presentation.html"
+PRESENTATION_PDF="$(pwd)/presentation/financial_advisor_presentation.pdf"
 
-echo "Generating PDF from HTML..."
-"$CHROME_CMD" --headless --disable-gpu --print-to-pdf="$PDF_FILE" "$HTML_FILE"
+STUDY_HTML="$(pwd)/presentation/comprehensive_study_document.html"
+STUDY_PDF="$(pwd)/presentation/comprehensive_study_document.pdf"
+
+echo "Generating Presentation PDF from HTML..."
+"$CHROME_CMD" --headless --disable-gpu --print-to-pdf="$PRESENTATION_PDF" "$PRESENTATION_HTML"
 
 if [ $? -eq 0 ]; then
-    echo "PDF successfully generated at: $PDF_FILE"
+    echo "Presentation PDF successfully generated at: $PRESENTATION_PDF"
 else
-    echo "Error generating PDF"
-    exit 1
+    echo "Error generating Presentation PDF"
+fi
+
+echo "Generating Comprehensive Study Document PDF from HTML..."
+"$CHROME_CMD" --headless --disable-gpu --print-to-pdf="$STUDY_PDF" "$STUDY_HTML"
+
+if [ $? -eq 0 ]; then
+    echo "Comprehensive Study Document PDF successfully generated at: $STUDY_PDF"
+else
+    echo "Error generating Comprehensive Study Document PDF"
 fi 

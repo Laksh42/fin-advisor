@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprehensive Study Document: Multi-Modal Financial Advisor Chatbot</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+        
+        :root {
+            --primary-color: #0056b3;
+            --secondary-color: #f8f9fa;
+            --accent-color: #28a745;
+            --text-color: #333;
+            --light-gray: #e9ecef;
+            --dark-gray: #6c757d;
+        }
+        
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            background-color: white;
+        }
+        
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            color: var(--primary-color);
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            text-align: center;
+            color: white;
+        }
+        
+        h2 {
+            font-size: 2rem;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.3em;
+        }
+        
+        h3 {
+            font-size: 1.75rem;
+        }
+        
+        h4 {
+            font-size: 1.5rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+        }
+        
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        .toc {
+            background-color: var(--secondary-color);
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+        
+        .toc h2 {
+            margin-top: 0;
+        }
+        
+        .toc ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .toc ul ul {
+            padding-left: 20px;
+        }
+        
+        .toc li {
+            margin-bottom: 5px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .subsection {
+            margin-left: 20px;
+        }
+        
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: var(--light-gray);
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        
+        pre {
+            background-color: var(--light-gray);
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        
+        .diagram {
+            background-color: var(--secondary-color);
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .diagram img {
+            max-width: 100%;
+        }
+        
+        .note {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 10px 15px;
+            margin: 15px 0;
+        }
+        
+        .info {
+            background-color: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 10px 15px;
+            margin: 15px 0;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            border: 1px solid var(--light-gray);
+            padding: 8px 12px;
+        }
+        
+        th {
+            background-color: var(--secondary-color);
+            font-weight: bold;
+            text-align: left;
+        }
+        
+        tr:nth-child(even) {
+            background-color: var(--secondary-color);
+        }
+        
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+            margin-top: 50px;
+        }
+        
+        @media print {
+            .container {
+                max-width: none;
+                padding: 0;
+            }
+            
+            h2 {
+                page-break-before: always;
+            }
+            
+            h1, h2, h3, h4, h5, h6 {
+                page-break-after: avoid;
+            }
+            
+            .no-print {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Comprehensive Study Document</h1>
+            <p>Multi-Modal Financial Advisor Chatbot</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="toc">
+            <h2>Table of Contents</h2>
+            <ul>
+                <li><a href="#project-overview">1. Project Overview</a></li>
+                <li><a href="#high-level-architecture">2. High-Level Architecture</a></li>
+                <li><a href="#frontend-details">3. Frontend Details</a></li>
+                <li><a href="#backend-api">4. Backend and API Services</a></li>
+                <li><a href="#data-management">5. Data Management and Storage</a></li>
+                <li><a href="#model-integration">6. Model Integration and Machine Learning</a></li>
+                <li><a href="#chatbot-functionality">7. Chatbot Functionality and Interaction</a></li>
+                <li><a href="#integration-testing">8. Integration, Testing, and Deployment</a></li>
+                <li><a href="#security-privacy">9. Security, Privacy, and Compliance</a></li>
+                <li><a href="#development-process">10. Development Process and Team Collaboration</a></li>
+                <li><a href="#challenges-future">11. Challenges, Learnings, and Future Enhancements</a></li>
+            </ul>
+        </div>
+        
+        <section id="project-overview" class="section">
+            <h2>1. Project Overview</h2>
+            
+            <h3>1.1 Primary Goal and Purpose</h3>
+            <p>The primary goal of the ewfx/aidhp-deep-agents project is to solve the challenge of hyper-personalized financial product recommendations by leveraging Generative AI and multi-modal data processing. The project aims to create an AI-driven digital financial advisor that dynamically adapts to users' evolving needs, moving beyond traditional, generic financial advice.</p>
+            
+            <p>The core purpose of this project is to revolutionize digital banking by providing highly personalized, AI-driven financial planning that enhances user engagement, financial literacy, and decision-making through a smart, adaptive chatbot.</p>
+            
+            <h3>1.2 Key Use Cases and User Personas</h3>
+            <p>The Multi-Modal Financial Advisor Chatbot is designed to serve various user personas with different financial needs, backgrounds, and goals. Some of the key personas include:</p>
+            
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>Persona</th>
+                        <th>Description</th>
+                        <th>Primary Goals</th>
+                        <th>Use Cases</th>
+                    </tr>
+                    <tr>
+                        <td>Young Professional</td>
+                        <td>25-35 years old, early in career, moderate income, some debt (student loans)</td>
+                        <td>Building credit, managing debt, starting investments</td>
+                        <td>
+                            - Basic investment recommendations<br>
+                            - Debt management strategies<br>
+                            - Budgeting assistance
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Family Planner</td>
+                        <td>35-45 years old, established career, family responsibilities</td>
+                        <td>College savings, retirement planning, insurance needs</td>
+                        <td>
+                            - Education savings plans<br>
+                            - Life insurance options<br>
+                            - Long-term investment strategies
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Pre-Retiree</td>
+                        <td>50-65 years old, peak earning years, focused on retirement</td>
+                        <td>Maximizing retirement savings, portfolio adjustments</td>
+                        <td>
+                            - Retirement readiness assessment<br>
+                            - Conservative investment shifts<br>
+                            - Tax optimization strategies
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Small Business Owner</td>
+                        <td>Variable age, entrepreneurial, complex financial needs</td>
+                        <td>Business growth, personal-business financial separation</td>
+                        <td>
+                            - Business loan options<br>
+                            - Retirement plans for small businesses<br>
+                            - Tax planning for entrepreneurs
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            
+            <h3>1.3 Business Problems and Expected Outcomes</h3>
+            <p><strong>Business Problems Addressed:</strong></p>
+            <ul>
+                <li>Generic, one-size-fits-all financial advice that fails to address individual needs</li>
+                <li>Low customer engagement with traditional financial advisory services</li>
+                <li>Limited accessibility to personalized financial guidance for average consumers</li>
+                <li>Inefficient customer onboarding processes in financial institutions</li>
+                <li>Poor customer retention due to lack of personalization and follow-up</li>
+                <li>Inconsistent quality of financial advice provided by human advisors</li>
+            </ul>
+            
+            <p><strong>Expected Outcomes:</strong></p>
+            <ul>
+                <li>Increased customer engagement with financial products through personalized recommendations</li>
+                <li>Enhanced financial literacy among users through tailored educational content</li>
+                <li>Higher conversion rates for financial product offerings</li>
+                <li>Improved customer satisfaction and loyalty</li>
+                <li>Reduction in customer service costs through automated, intelligent advisory services</li>
+                <li>More inclusive financial advisory services reaching underserved demographics</li>
+                <li>Data-driven insights into customer preferences and behaviors for financial institutions</li>
+            </ul>
+        </section>
+        
+        <section id="high-level-architecture" class="section">
+            <h2>2. High-Level Architecture</h2>
+            
+            <h3>2.1 Architectural Diagram</h3>
+            <div class="diagram">
+                <pre style="text-align: left; font-size: 14px; line-height: 1.2;">
+  +-------------------------------------------------------------------------------------------------+
+  |                                        CLIENT LAYER                                              |
+  |  +-----------------------------------------------------------------------------------------+     |
+  |  |                                      WEB INTERFACE                                      |     |
+  |  |                                       (React.js)                                        |     |
+  |  +-----------------------------------------------------------------------------------------+     |
+  +----------------------------------------------------^------------------------------------------+
+                                                       |
+                                                       | HTTP/REST
+                                                       |
+  +----------------------------------------------------v------------------------------------------+
+  |                                    APPLICATION LAYER                                           |
+  |  +-----------------------------------------------------------------------------------------+  |
+  |  |                                  FASTAPI BACKEND                                        |  |
+  |  |  +---------------------------+  +---------------------------+  +---------------------+  |  |
+  |  |  |     ONBOARDING ENGINE     |  |        AUTH SYSTEM        |  |  API ENDPOINTS      |  |  |
+  |  |  +---------------------------+  +---------------------------+  +---------------------+  |  |
+  |  +-----------------------------------------------------------------------------------------+  |
+  +----------------------------------------------------^------------------------------------------+
+                                                       |
+                                                       | Internal APIs
+                                                       |
+  +----------------------------------------------------v------------------------------------------+
+  |                                        AI LAYER                                                |
+  |  +---------------------------+       +---------------------------+                             |
+  |  |     ONBOARDING AGENT      |<----->|      ADVISORY AGENT       |                            |
+  |  | (User Profiling, Goal     |       | (Product Recommendations, |                            |
+  |  |  Assessment, Risk         |       |  Educational Content,     |                            |
+  |  |  Tolerance Evaluation)    |       |  Advisory Documents)      |                            |
+  |  +---------------------------+       +---------------------------+                             |
+  |                                             ^                                                  |
+  |                                             |                                                  |
+  |  +---------------------------+              |              +---------------------------+       |
+  |  |   MULTI-MODAL PROCESSOR   |<----------->|<------------>|  RECOMMENDATION ENGINE    |       |
+  |  | (Text, Image, Voice)      |              |              | (RAG, Meta-prompts)       |       |
+  |  +---------------------------+              |              +---------------------------+       |
+  |                                             |                                                  |
+  +----------------------------------------------------^------------------------------------------+
+                                                       |
+                                                       | Data Access
+                                                       |
+  +----------------------------------------------------v------------------------------------------+
+  |                                       DATA LAYER                                               |
+  |  +---------------------------+  +---------------------------+  +---------------------------+   |
+  |  |        MONGODB            |  |       VECTOR STORE        |  |       REDIS CACHE         |   |
+  |  | (User Profiles,           |  | (Embeddings for RAG)      |  | (Performance Caching)     |   |
+  |  |  Conversations,           |  |                           |  |                           |   |
+  |  |  Financial Data)          |  |                           |  |                           |   |
+  |  +---------------------------+  +---------------------------+  +---------------------------+   |
+  +-------------------------------------------------------------------------------------------------+
+                
+  +-------------------------------------------------------------------------------------------+
+  |                                    ETHICAL AI LAYER                                        |
+  |  +---------------------------+  +---------------------------+  +---------------------------+|
+  |  |   EXPLAINABILITY TOOLS    |  |    BIAS DETECTION        |  |  TRANSPARENCY MECHANISMS  ||
+  |  +---------------------------+  +---------------------------+  +---------------------------+|
+  +-------------------------------------------------------------------------------------------+
+                </pre>
+            </div>
+            
+            <h3>2.2 System Architecture Overview</h3>
+            <p>The Multi-Modal Financial Advisor Chatbot employs a layered microservices architecture organized around business capabilities and separated by layers that handle specific aspects of the application. This architecture was chosen to ensure:</p>
+            
+            <ul>
+                <li><strong>Modularity:</strong> Each component can be developed, tested, and deployed independently.</li>
+                <li><strong>Scalability:</strong> Different services can be scaled according to demand.</li>
+                <li><strong>Flexibility:</strong> Multiple LLM providers can be integrated, ensuring resilience if one provider is unavailable.</li>
+                <li><strong>Maintainability:</strong> Components can be updated or replaced with minimal impact on the overall system.</li>
+            </ul>
+            
+            <p>The main architectural layers include:</p>
+            
+            <h4>2.2.1 Client Layer</h4>
+            <p>The client layer consists of a React.js-based web interface that provides users with an interactive platform for chat interactions, document uploads, and viewing personalized financial content. This layer handles the presentation logic and user experience aspects of the application.</p>
+            
+            <h4>2.2.2 Application Layer</h4>
+            <p>The application layer is built using FastAPI (Python) and serves as the main orchestration layer, handling API requests, authentication, and routing to appropriate services. The FastAPI backend integrates with various AI services and manages the overall flow of the application.</p>
+            
+            <h4>2.2.3 AI Layer</h4>
+            <p>This layer contains the core intelligence of the system, including:</p>
+            <ul>
+                <li><strong>Dual-Agent System:</strong> Two specialized LLM instances - an Onboarding Agent for user profiling and an Advisory Agent for generating personalized financial recommendations.</li>
+                <li><strong>Multi-Modal Processor:</strong> Handles diverse input types (text, image, and voice) to extract and interpret user information.</li>
+                <li><strong>Recommendation Engine:</strong> Uses Retrieval-Augmented Generation (RAG) and meta-prompts to generate personalized financial advice.</li>
+            </ul>
+            
+            <h4>2.2.4 Data Layer</h4>
+            <p>The data layer manages all persistent data storage needs of the application:</p>
+            <ul>
+                <li><strong>MongoDB:</strong> Primary database for storing user profiles, conversations, and financial data.</li>
+                <li><strong>Vector Store:</strong> Specialized storage for embeddings used in the RAG system.</li>
+                <li><strong>Redis Cache:</strong> In-memory data structure store used for caching to enhance performance.</li>
+            </ul>
+            
+            <h4>2.2.5 Ethical AI Layer</h4>
+            <p>This cross-cutting layer implements tools and mechanisms to ensure the AI system operates ethically:</p>
+            <ul>
+                <li><strong>Explainability Tools:</strong> Provide reasoning and justification for AI recommendations.</li>
+                <li><strong>Bias Detection:</strong> Monitors and mitigates biases in AI-generated financial advice.</li>
+                <li><strong>Transparency Mechanisms:</strong> Ensure users understand how their data influences recommendations.</li>
+            </ul>
+            
+            <h3>2.3 Data Flow Between Components</h3>
+            <p>The data flow within the Multi-Modal Financial Advisor Chatbot follows several key pathways:</p>
+            
+            <h4>2.3.1 Onboarding Flow</h4>
+            <ol>
+                <li>User inputs (text, uploaded documents) are received through the Web Interface and sent to the FastAPI Backend.</li>
+                <li>The Onboarding Engine routes the request to the Onboarding Agent in the AI Layer.</li>
+                <li>The Onboarding Agent processes the input, potentially utilizing the Multi-Modal Processor for non-text inputs.</li>
+                <li>The agent generates contextually appropriate questions to gather more user information.</li>
+                <li>User responses are used to build a comprehensive profile stored in MongoDB.</li>
+                <li>Once sufficient information is gathered, the system transitions to the advisory phase.</li>
+            </ol>
+            
+            <h4>2.3.2 Advisory Flow</h4>
+            <ol>
+                <li>The Advisory Agent retrieves the user profile from MongoDB.</li>
+                <li>The Recommendation Engine generates personalized meta-prompts based on the user profile.</li>
+                <li>The Advisory Agent uses these meta-prompts to query appropriate LLMs for financial recommendations.</li>
+                <li>The RAG system enhances responses by retrieving relevant financial information from the Vector Store.</li>
+                <li>Generated recommendations are processed through the Ethical AI Layer to ensure they are unbiased and explainable.</li>
+                <li>The finalized recommendations and educational content are delivered to the user through the Web Interface.</li>
+            </ol>
+            
+            <h4>2.3.3 Continuous Learning Flow</h4>
+            <ol>
+                <li>User interactions and feedback are captured through the Web Interface.</li>
+                <li>This interaction data is stored in MongoDB for future reference.</li>
+                <li>The system analyzes patterns in user behavior and feedback to refine recommendation strategies.</li>
+                <li>Updated user preferences and behavior patterns are incorporated into the user profile.</li>
+                <li>The Recommendation Engine adapts its strategies based on this continuous learning process.</li>
+            </ol>
+            
+            <div class="info">
+                <p><strong>Architecture Decision Rationale:</strong> The layered microservices approach was chosen over a monolithic architecture to facilitate independent scaling of components, especially the computationally intensive AI services. This design also allows for graceful degradation if certain services are unavailable and enables the system to switch between different LLM providers based on availability and specific use-case requirements.</p>
+            </div>
+        </section>
+        
+        <section id="frontend-details" class="section">
+            <h2>3. Frontend Details</h2>
+            
+            <h3>3.1 Frontend Framework and Libraries</h3>
+            <p>The Multi-Modal Financial Advisor Chatbot frontend is built using modern web technologies to create an intuitive, responsive, and engaging user interface. The primary framework and supporting libraries include:</p>
+            
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>Technology</th>
+                        <th>Version</th>
+                        <th>Purpose</th>
+                    </tr>
+                    <tr>
+                        <td>React.js</td>
+                        <td>18.x</td>
+                        <td>Core frontend library for building the user interface with reusable components</td>
+                    </tr>
+                    <tr>
+                        <td>Material-UI</td>
+                        <td>5.x</td>
+                        <td>Component library providing consistent, professional UI elements following Material Design principles</td>
+                    </tr>
+                    <tr>
+                        <td>React Router</td>
+                        <td>6.x</td>
+                        <td>Handling client-side routing between different views of the application</td>
+                    </tr>
+                    <tr>
+                        <td>React Markdown</td>
+                        <td>8.x</td>
+                        <td>Rendering formatted advisory documents and educational content with proper styling</td>
+                    </tr>
+                    <tr>
+                        <td>Axios</td>
+                        <td>1.x</td>
+                        <td>HTTP client for making API requests to the FastAPI backend</td>
+                    </tr>
+                    <tr>
+                        <td>Redux Toolkit</td>
+                        <td>1.9.x</td>
+                        <td>State management for complex application state and global user data</td>
+                    </tr>
+                    <tr>
+                        <td>React Query</td>
+                        <td>4.x</td>
+                        <td>Data fetching, caching, and state management for API interactions</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <h3>3.2 UI Structure and Components</h3>
+            <p>The user interface is structured around several key pages and components, each serving a specific purpose in the financial advisory workflow:</p>
+            
+            <h4>3.2.1 Main Pages</h4>
+            
+            <ul>
+                <li><strong>Landing Page</strong>: Introduces the financial advisor chatbot and its capabilities, featuring:
+                    <ul>
+                        <li>Brief overview of the platform's functionality</li>
+                        <li>Authentication options (login/register)</li>
+                        <li>Testimonials and trust indicators</li>
+                    </ul>
+                </li>
+                
+                <li><strong>Authentication Pages</strong>: Includes login and registration forms with:
+                    <ul>
+                        <li>Form validation for user inputs</li>
+                        <li>Password strength indicators</li>
+                        <li>OAuth integration for social login options</li>
+                    </ul>
+                </li>
+                
+                <li><strong>Onboarding Dashboard</strong>: Guides new users through the initial profile setup:
+                    <ul>
+                        <li>Step-by-step onboarding process</li>
+                        <li>Progress indicators</li>
+                        <li>Interactive questionnaires for financial goal setting</li>
+                    </ul>
+                </li>
+                
+                <li><strong>Chat Interface</strong>: The primary interaction point with the AI advisor:
+                    <ul>
+                        <li>Chat history display with user and bot messages</li>
+                        <li>Message input area with support for text and file uploads</li>
+                        <li>Typing indicators and status updates</li>
+                        <li>Context-aware suggestions</li>
+                    </ul>
+                </li>
+                
+                <li><strong>Advisory Document Viewer</strong>: Displays personalized financial advice documents:
+                    <ul>
+                        <li>Rich text formatting with Markdown support</li>
+                        <li>Document categorization and filtering</li>
+                        <li>Save and export options</li>
+                    </ul>
+                </li>
+                
+                <li><strong>Product Recommendation Dashboard</strong>: Showcases personalized financial product recommendations:
+                    <ul>
+                        <li>Card-based product displays with key features</li>
+                        <li>Comparison tools for multiple products</li>
+                        <li>Integration with product-specific chatbots</li>
+                    </ul>
+                </li>
+                
+                <li><strong>User Profile Management</strong>: Allows users to view and update their information:
+                    <ul>
+                        <li>Personal and financial information settings</li>
+                        <li>Preference management</li>
+                        <li>Privacy controls</li>
+                    </ul>
+                </li>
+            </ul>
+            
+            <h4>3.2.2 Key Components</h4>
+            
+            <ul>
+                <li><strong>ChatComponent</strong>: Handles the display and interaction within the chat interface:
+                    <pre><code>// ChatComponent.jsx
+import React, { useState, useEffect, useRef } from 'react';
+import { Box, TextField, Button, Paper, Typography, CircularProgress } from '@mui/material';
+import { useSelector, useDispatch } from 'react-redux';
+import { sendMessage, fetchChatHistory } from '../slices/chatSlice';
+
+const ChatComponent = () => {
+  const [message, setMessage] = useState('');
+  const chatEndRef = useRef(null);
+  const dispatch = useDispatch();
+  const { messages, loading } = useSelector((state) => state.chat);
+  const { user } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    // Fetch chat history when component mounts
+    if (user) {
+      dispatch(fetchChatHistory());
+    }
+  }, [dispatch, user]);
+
+  useEffect(() => {
+    // Scroll to bottom of chat when messages change
+    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
+
+  const handleSendMessage = (e) => {
+    e.preventDefault();
+    if (message.trim()) {
+      dispatch(sendMessage({ content: message, sender: 'user' }));
+      setMessage('');
+    }
+  };
+
+  // Component rendering logic...
+};</code></pre>
+                </li>
+                
+                <li><strong>RecommendationCard</strong>: Displays individual financial product recommendations:
+                    <pre><code>// RecommendationCard.jsx
+import React from 'react';
+import { Card, CardContent, CardActions, Button, Typography, Chip, Box } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+
+const RecommendationCard = ({ product, matchScore }) => {
+  const navigate = useNavigate();
+  
+  const handleLearnMore = () => {
+    navigate(`/products/${product.id}`);
+  };
+  
+  const handleChatAbout = () => {
+    navigate(`/chat/product/${product.id}`);
+  };
+  
+  return (
+    <Card elevation={3} sx={{ mb: 2, position: 'relative' }}>
+      <Box sx={{ position: 'absolute', top: 10, right: 10 }}>
+        <Chip 
+          label={`${matchScore}% Match`}
+          color={matchScore > 85 ? "success" : matchScore > 70 ? "primary" : "default"}
+        />
+      </Box>
+      <CardContent>
+        <Typography variant="h6">{product.name}</Typography>
+        <Typography variant="body2" color="text.secondary">{product.description}</Typography>
+        {/* Additional product details... */}
+      </CardContent>
+      <CardActions>
+        <Button size="small" onClick={handleLearnMore}>Learn More</Button>
+        <Button size="small" color="primary" onClick={handleChatAbout}>
+          Chat About This Product
+        </Button>
+      </CardActions>
+    </Card>
+  );
+};</code></pre>
+                </li>
+                
+                <li><strong>DocumentViewer</strong>: Renders personalized advisory documents using Markdown:
+                    <pre><code>// DocumentViewer.jsx
+import React from 'react';
+import ReactMarkdown from 'react-markdown';
+import { Paper, Typography, Divider, Box } from '@mui/material';
+import remarkGfm from 'remark-gfm';
+
+const DocumentViewer = ({ document }) => {
+  if (!document) return null;
+  
+  return (
+    <Paper elevation={2} sx={{ p: 3 }}>
+      <Typography variant="h4" gutterBottom>{document.title}</Typography>
+      <Typography variant="subtitle1" color="text.secondary" gutterBottom>
+        Generated on: {new Date(document.createdAt).toLocaleDateString()}
+      </Typography>
+      <Divider sx={{ my: 2 }} />
+      <Box sx={{ 
+        '& img': { maxWidth: '100%' },
+        '& table': { borderCollapse: 'collapse', width: '100%' },
+        '& th, & td': { border: '1px solid #ddd', padding: '8px' },
+        '& th': { paddingTop: '12px', paddingBottom: '12px', textAlign: 'left', backgroundColor: '#f8f9fa' }
+      }}>
+        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+          {document.content}
+        </ReactMarkdown>
+      </Box>
+    </Paper>
+  );
+};</code></pre>
+                </li>
+            </ul>
+            
+            <h3>3.3 Frontend-Backend Integration</h3>
+            <p>The frontend integrates with the backend through a RESTful API client service that abstracts the communication details:</p>
+            
+            <pre><code>// apiService.js
+import axios from 'axios';
+
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8000/api';
+
+// Create axios instance with default config
+const apiClient = axios.create({
+  baseURL: API_BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+// Request interceptor for adding auth token
+apiClient.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
+// Response interceptor for error handling
+apiClient.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    // Handle authentication errors
+    if (error.response && error.response.status === 401) {
+      localStorage.removeItem('token');
+      window.location.href = '/login';
+    }
+    return Promise.reject(error);
+  }
+);
+
+// API service methods
+const apiService = {
+  // Auth endpoints
+  login: (credentials) => apiClient.post('/auth/token', credentials),
+  register: (userData) => apiClient.post('/auth/register', userData),
+  getCurrentUser: () => apiClient.get('/auth/me'),
+  
+  // Chat endpoints
+  sendMessage: (message) => apiClient.post('/chat/message', message),
+  getConversations: () => apiClient.get('/chat/conversations'),
+  getConversation: (id) => apiClient.get(`/chat/conversations/${id}`),
+  
+  // Recommendations endpoints
+  getRecommendations: () => apiClient.get('/recommendations'),
+  getRecommendationHistory: () => apiClient.get('/recommendations/history'),
+  provideFeedback: (feedback) => apiClient.post('/recommendations/feedback', feedback),
+  
+  // Onboarding endpoints
+  startOnboarding: () => apiClient.post('/onboard/start'),
+  updateOnboarding: (data) => apiClient.post('/onboard/update', data),
+  completeOnboarding: () => apiClient.post('/onboard/complete'),
+  
+  // Advisory document endpoints
+  getDocuments: () => apiClient.get('/advisory/documents'),
+  getDocument: (id) => apiClient.get(`/advisory/documents/${id}`),
+  
+  // Product-specific chat
+  sendProductMessage: (productId, message) => 
+    apiClient.post(`/products/${productId}/chat`, message),
+  
+  // Image upload and analysis
+  uploadImage: (formData) => 
+    apiClient.post('/images/upload', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    }),
+};
+
+export default apiService;</code></pre>
+            
+            <h3>3.4 Design Principles and UI/UX Guidelines</h3>
+            <p>The frontend design follows several key principles and guidelines to ensure a consistent and intuitive user experience:</p>
+            
+            <h4>3.4.1 Design System</h4>
+            <ul>
+                <li><strong>Material Design Integration</strong>: Follows Google's Material Design principles through Material-UI components.</li>
+                <li><strong>Responsive Layout</strong>: Uses CSS Grid and Flexbox to ensure proper rendering across devices of different screen sizes.</li>
+                <li><strong>Consistent Typography</strong>: Implements a hierarchical type system with defined font sizes, weights, and line heights.</li>
+                <li><strong>Color System</strong>: Utilizes a defined palette with primary, secondary, and accent colors, along with semantic colors for success, warning, and error states.</li>
+            </ul>
+            
+            <h4>3.4.2 Accessibility Considerations</h4>
+            <ul>
+                <li>WCAG 2.1 AA compliance for all interactive elements</li>
+                <li>Proper contrast ratios for text and background colors</li>
+                <li>Keyboard navigation support for all interactive elements</li>
+                <li>Screen reader compatibility with ARIA labels and roles</li>
+                <li>Focus management for improved keyboard accessibility</li>
+            </ul>
+            
+            <h4>3.4.3 UX Patterns</h4>
+            <ul>
+                <li><strong>Progressive Disclosure</strong>: Information is revealed gradually, starting with essential elements and providing additional details on demand.</li>
+                <li><strong>Contextual Help</strong>: Tooltips and information icons provide explanations for financial terms and concepts.</li>
+                <li><strong>Clear Feedback</strong>: All user actions receive immediate visual feedback, with loading indicators for asynchronous operations.</li>
+                <li><strong>Guided Journeys</strong>: Step-by-step processes with clear progress indicators, especially for complex operations like onboarding.</li>
+                <li><strong>Consistency</strong>: Common actions maintain consistent positioning and behavior throughout the application.</li>
+            </ul>
+            
+            <div class="note">
+                <p><strong>Design Decision Highlight:</strong> The conversational UI was designed to balance the familiarity of messaging apps with the specialized needs of financial advisory. This involved using larger message bubbles to accommodate complex financial content and incorporating visual elements like charts and comparison tables directly within the chat flow to maintain context while presenting complex information.</p>
+            </div>
+        </section>
+        
+        <!-- Additional sections will be added in subsequent edits -->
+        
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Multi-Modal Financial Advisor Chatbot Project | Lakshay Sharma & Apurva Singh</p>
+        </div>
+    </footer>
+</body>
+</html> 
