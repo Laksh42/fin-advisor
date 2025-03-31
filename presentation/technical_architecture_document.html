@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technical Architecture Document: Multi-Modal Financial Advisor Chatbot</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500;700&family=Roboto:wght@300;400;500;700&display=swap');
+        
+        :root {
+            --primary-color: #0d47a1;
+            --secondary-color: #f8f9fa;
+            --accent-color: #1976d2;
+            --text-color: #333;
+            --light-gray: #e9ecef;
+            --dark-gray: #6c757d;
+            --code-bg: #f5f5f5;
+            --code-color: #d81b60;
+            --border-color: #ddd;
+        }
+        
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            background-color: white;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            color: var(--primary-color);
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            text-align: center;
+            color: white;
+        }
+        
+        h2 {
+            font-size: 2rem;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.3em;
+        }
+        
+        h3 {
+            font-size: 1.75rem;
+        }
+        
+        h4 {
+            font-size: 1.5rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+        }
+        
+        a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        .toc {
+            background-color: var(--secondary-color);
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+        
+        .toc h2 {
+            margin-top: 0;
+        }
+        
+        .toc ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .toc ul ul {
+            padding-left: 20px;
+        }
+        
+        .toc li {
+            margin-bottom: 5px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .subsection {
+            margin-left: 20px;
+        }
+        
+        code {
+            font-family: 'Roboto Mono', monospace;
+            background-color: var(--code-bg);
+            color: var(--code-color);
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+        
+        pre {
+            background-color: var(--code-bg);
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.9em;
+            line-height: 1.4;
+            border: 1px solid var(--border-color);
+        }
+        
+        .diagram {
+            background-color: var(--secondary-color);
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+        
+        .diagram img {
+            max-width: 100%;
+        }
+        
+        .note {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 10px 15px;
+            margin: 15px 0;
+        }
+        
+        .info {
+            background-color: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 10px 15px;
+            margin: 15px 0;
+        }
+        
+        .warning {
+            background-color: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 10px 15px;
+            margin: 15px 0;
+        }
+        
+        .tip {
+            background-color: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 10px 15px;
+            margin: 15px 0;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 8px 12px;
+        }
+        
+        th {
+            background-color: var(--secondary-color);
+            font-weight: bold;
+            text-align: left;
+        }
+        
+        tr:nth-child(even) {
+            background-color: var(--secondary-color);
+        }
+        
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+            margin-top: 50px;
+        }
+        
+        .architecture-diagram {
+            display: block;
+            margin: 30px auto;
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .file-structure {
+            font-family: 'Roboto Mono', monospace;
+            background-color: var(--code-bg);
+            padding: 15px;
+            border-radius: 5px;
+            white-space: pre;
+            overflow-x: auto;
+            font-size: 0.9em;
+            border: 1px solid var(--border-color);
+        }
+        
+        .component-diagram {
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            background-color: white;
+            margin: 20px 0;
+        }
+        
+        @media print {
+            .container {
+                max-width: none;
+                padding: 0;
+            }
+            
+            h2 {
+                page-break-before: always;
+            }
+            
+            h1, h2, h3, h4, h5, h6 {
+                page-break-after: avoid;
+            }
+            
+            pre, code, table {
+                page-break-inside: avoid;
+            }
+            
+            .no-print {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Technical Architecture Document</h1>
+            <p>Multi-Modal Financial Advisor Chatbot</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="toc">
+            <h2>Table of Contents</h2>
+            <ul>
+                <li><a href="#system-architecture">1. System Architecture</a>
+                    <ul>
+                        <li><a href="#architectural-overview">1.1 Architectural Overview</a></li>
+                        <li><a href="#detailed-component-interaction">1.2 Detailed Component Interaction</a></li>
+                        <li><a href="#design-patterns">1.3 Design Patterns</a></li>
+                        <li><a href="#tech-stack-details">1.4 Technology Stack Details</a></li>
+                    </ul>
+                </li>
+                <li><a href="#codebase-organization">2. Codebase Organization</a>
+                    <ul>
+                        <li><a href="#project-structure">2.1 Project Structure</a></li>
+                        <li><a href="#module-breakdown">2.2 Module Breakdown</a></li>
+                        <li><a href="#dependency-management">2.3 Dependency Management</a></li>
+                    </ul>
+                </li>
+                <li><a href="#backend-implementation">3. Backend Implementation</a>
+                    <ul>
+                        <li><a href="#fastapi-implementation">3.1 FastAPI Implementation</a></li>
+                        <li><a href="#api-layer">3.2 API Layer & Routing</a></li>
+                        <li><a href="#authentication-system">3.3 Authentication System</a></li>
+                        <li><a href="#database-access">3.4 Database Access Patterns</a></li>
+                    </ul>
+                </li>
+                <li><a href="#ai-subsystem">4. AI Subsystem</a>
+                    <ul>
+                        <li><a href="#dual-agent-architecture">4.1 Dual-Agent Architecture</a></li>
+                        <li><a href="#llm-integration">4.2 LLM Integration</a></li>
+                        <li><a href="#meta-prompt-generation">4.3 Meta-Prompt Generation</a></li>
+                        <li><a href="#rag-implementation">4.4 RAG Implementation</a></li>
+                    </ul>
+                </li>
+                <li><a href="#frontend-architecture">5. Frontend Architecture</a>
+                    <ul>
+                        <li><a href="#react-component-hierarchy">5.1 React Component Hierarchy</a></li>
+                        <li><a href="#state-management">5.2 State Management</a></li>
+                        <li><a href="#api-integration">5.3 API Integration</a></li>
+                    </ul>
+                </li>
+                <li><a href="#data-management">6. Data Management</a>
+                    <ul>
+                        <li><a href="#database-schema">6.1 Database Schema</a></li>
+                        <li><a href="#data-models">6.2 Data Models</a></li>
+                        <li><a href="#data-flow">6.3 Data Flow</a></li>
+                    </ul>
+                </li>
+                <li><a href="#deployment-infrastructure">7. Deployment & Infrastructure</a>
+                    <ul>
+                        <li><a href="#deployment-architecture">7.1 Deployment Architecture</a></li>
+                        <li><a href="#ci-cd-pipeline">7.2 CI/CD Pipeline</a></li>
+                        <li><a href="#scaling-considerations">7.3 Scaling Considerations</a></li>
+                    </ul>
+                </li>
+                <li><a href="#testing-strategy">8. Testing Strategy</a>
+                    <ul>
+                        <li><a href="#testing-approach">8.1 Testing Approach</a></li>
+                        <li><a href="#test-coverage">8.2 Test Coverage</a></li>
+                        <li><a href="#performance-testing">8.3 Performance Testing</a></li>
+                    </ul>
+                </li>
+                <li><a href="#security-considerations">9. Security Considerations</a>
+                    <ul>
+                        <li><a href="#auth-security">9.1 Authentication & Authorization</a></li>
+                        <li><a href="#data-protection">9.2 Data Protection</a></li>
+                        <li><a href="#api-security">9.3 API Security</a></li>
+                    </ul>
+                </li>
+                <li><a href="#technical-challenges">10. Technical Challenges & Solutions</a></li>
+                <li><a href="#future-technical-roadmap">11. Future Technical Roadmap</a></li>
+            </ul>
+        </div>
+        
+        <section id="system-architecture" class="section">
+            <h2>1. System Architecture</h2>
+            
+            <section id="architectural-overview" class="subsection">
+                <h3>1.1 Architectural Overview</h3>
+                <p>The Multi-Modal Financial Advisor Chatbot implements a layered microservices architecture designed for scalability, modularity, and resilience. The system is structured in distinct layers, each with specific responsibilities and well-defined interfaces that facilitate independent development and deployment.</p>
+                
+                <div class="diagram">
+                    <pre style="text-align: left; font-size: 14px; line-height: 1.2;">
++------------------------------------------------------------------------------------------------+
+|                                      CLIENT LAYER                                              |
+| +------------------------------------------------------------------------------------+        |
+| |                                   WEB INTERFACE                                     |        |
+| |                                    (React.js)                                       |        |
+| +------------------------------------------------------------------------------------+        |
++----------------------------------------------------^------------------------------------------+
+                                                     |
+                                                     | HTTP/REST
+                                                     |
++----------------------------------------------------v------------------------------------------+
+|                                   APPLICATION LAYER                                           |
+| +------------------------------------------------------------------------------------+       |
+| |                                  FASTAPI BACKEND                                    |       |
+| |                                                                                     |       |
+| |  +--------------------+  +--------------------+  +------------------------+         |       |
+| |  |  ONBOARDING ENGINE |  |  AUTH SYSTEM       |  |  API ENDPOINTS         |         |       |
+| |  |                    |  |                    |  |                        |         |       |
+| |  | - Conversation     |  | - JWT-based auth   |  | - Chat endpoints       |         |       |
+| |  |   flow management  |  | - Token generation |  | - Recommendation APIs  |         |       |
+| |  | - Profile creation |  | - Validation       |  | - User management      |         |       |
+| |  |                    |  |                    |  |                        |         |       |
+| |  +--------------------+  +--------------------+  +------------------------+         |       |
+| |               |                    |                        |                       |       |
+| |               +--------------------+------------------------+                       |       |
+| |                                    |                                                |       |
+| +----------------------------------- | ----------------------------------------------+       |
++---------------------------------------|-----------------------------------------------+       |
+                                        |
+                                        | Internal APIs
+                                        |
++----------------------------------------------------v------------------------------------------+
+|                                      AI LAYER                                                 |
+|  +-------------------------+                        +---------------------------+             |
+|  |    ONBOARDING AGENT     |<--------------------->|     ADVISORY AGENT        |             |
+|  |                         |                        |                           |             |
+|  | - Contextual Q&A        |                        | - Personalized recs       |             |
+|  | - Risk assessment       |   context transfer     | - Educational content     |             |
+|  | - Goal identification   |                        | - Product-specific info   |             |
+|  | - Financial profiling   |                        | - Financial planning      |             |
+|  +-------------------------+                        +---------------------------+             |
+|         ^           ^                                     ^             ^                     |
+|         |           |                                     |             |                     |
+|         v           v                                     v             v                     |
+|  +-------------------------+                        +---------------------------+             |
+|  |  MULTI-MODAL PROCESSOR  |                        |   RECOMMENDATION ENGINE   |             |
+|  |                         |                        |                           |             |
+|  | - Text processing       |                        | - RAG system              |             |
+|  | - Document analysis     |                        | - Meta-prompt generation  |             |
+|  | - Image recognition     |                        | - Matching algorithms     |             |
+|  | - Future: voice         |                        | - RLHF                    |             |
+|  +-------------------------+                        +---------------------------+             |
+|                                                                                               |
++-------------------------------------------------------------------------------^---------------+
+                                                                                |
+                                                                                | Data Access
+                                                                                |
++-------------------------------------------------------------------------------v---------------+
+|                                      DATA LAYER                                               |
+|  +-------------------------+    +-------------------------+    +------------------------+     |
+|  |        MONGODB          |    |       VECTOR STORE      |    |      REDIS CACHE       |     |
+|  |                         |    |                         |    |                        |     |
+|  | - User profiles         |    | - Embeddings           |    | - Session data         |     |
+|  | - Conversations        |    | - Semantic search      |    | - API response cache   |     |
+|  | - Product catalog       |    | - Financial knowledge  |    | - Rate limiting        |     |
+|  | - Transaction history   |    |   base vectors         |    | - Temporary storage    |     |
+|  +-------------------------+    +-------------------------+    +------------------------+     |
++-----------------------------------------------------------------------------------------------+
+                
++-----------------------------------------------------------------------------------------------+
+|                                    ETHICAL AI LAYER                                           |
+|  +------------------------+    +-------------------------+    +-------------------------+      |
+|  |  EXPLAINABILITY TOOLS  |    |     BIAS DETECTION      |    |  TRANSPARENCY MECHANISMS|      |
+|  |                        |    |                         |    |                         |      |
+|  | - Recommendation       |    | - Bias monitoring       |    | - User data access      |      |
+|  |   justification        |    | - Fairness metrics      |    | - Model card generation |      |
+|  | - Decision path tracing|    | - Intervention systems  |    | - Audit logging         |      |
+|  +------------------------+    +-------------------------+    +-------------------------+      |
++-----------------------------------------------------------------------------------------------+
+                    </pre>
+                </div>
+                
+                <p>The architecture follows microservices principles, with each component having a single responsibility and communicating through well-defined interfaces. Key architectural decisions include:</p>
+                
+                <ul>
+                    <li><strong>Layered Separation:</strong> Clear separation between layers allows for independent scaling and deployment of components.</li>
+                    <li><strong>Stateless Application Layer:</strong> The FastAPI backend is designed to be stateless, facilitating horizontal scaling.</li>
+                    <li><strong>Dual-Agent Architecture:</strong> Separation of concerns between onboarding and advisory functions improves specialization and maintainability.</li>
+                    <li><strong>Polyglot Persistence:</strong> Different data storage technologies for different data types (MongoDB for documents, Vector Store for embeddings, Redis for caching).</li>
+                    <li><strong>Cross-Cutting Ethical AI Layer:</strong> Ensures explainability, fairness, and transparency across all AI components.</li>
+                </ul>
+            </section>
+            
+            <section id="detailed-component-interaction" class="subsection">
+                <h3>1.2 Detailed Component Interaction</h3>
+                
+                <h4>1.2.1 Onboarding Flow</h4>
+                <div class="diagram">
+                    <pre style="text-align: left; font-size: 14px; line-height: 1.2;">
+┌───────────┐     ┌────────────┐     ┌─────────────┐     ┌──────────────┐     ┌───────────────┐
+│           │     │            │     │             │     │              │     │               │
+│  Client   │  1  │  FastAPI   │  2  │ Onboarding  │  3  │  Multi-Modal │  4  │ MongoDB       │
+│           ├─────►            ├─────►   Agent     ├─────►  Processor   ├─────►               │
+│           │     │            │     │             │     │              │     │               │
+└─────▲─────┘     └──────┬─────┘     └─────▲───────┘     └──────────────┘     └───────────────┘
+      │                  │                 │
+      │                  │                 │
+      │            6     │           5     │
+      └──────────────────┴─────────────────┘
+
+1. User sends initial data (text input or file upload)
+2. FastAPI routes request to Onboarding Agent
+3. For document/image analysis, Onboarding Agent calls Multi-Modal Processor
+4. User profile data is stored in MongoDB
+5. Onboarding Agent generates personalized follow-up questions
+6. Response is returned to client
+                    </pre>
+                </div>
+                
+                <h4>1.2.2 Advisory Flow</h4>
+                <div class="diagram">
+                    <pre style="text-align: left; font-size: 14px; line-height: 1.2;">
+┌───────────┐     ┌────────────┐     ┌─────────────┐     ┌──────────────┐     ┌───────────────┐
+│           │     │            │     │             │     │              │     │               │
+│  Client   │  1  │  FastAPI   │  2  │  Advisory   │  3  │Recommendation│  4  │ Vector Store  │
+│           ├─────►            ├─────►   Agent     ├─────►  Engine      ├─────►               │
+│           │     │            │     │             │     │              │     │               │
+└─────▲─────┘     └──────┬─────┘     └─────▲───────┘     └──────▲───────┘     └───────────────┘
+      │                  │                 │                    │
+      │                  │                 │                    │          ┌───────────────┐
+      │            7     │           6     │                    │       5  │               │
+      └──────────────────┴─────────────────┘                    └──────────► MongoDB       │
+                                                                           │               │
+                                                                           └───────────────┘
+
+1. User sends query or request for recommendations
+2. FastAPI routes to Advisory Agent
+3. Advisory Agent requests personalized recommendations
+4. Recommendation Engine retrieves relevant financial data from Vector Store
+5. User profile and previous interactions are fetched from MongoDB
+6. Advisory Agent generates personalized response with recommendations
+7. Response returned to client with explanations
+                    </pre>
+                </div>
+                
+                <h4>1.2.3 Multi-Modal Processing</h4>
+                <div class="diagram">
+                    <pre style="text-align: left; font-size: 14px; line-height: 1.2;">
+┌───────────┐     ┌────────────────┐     ┌─────────────────────┐
+│           │     │                │     │                     │
+│  Client   │  1  │ Document Image │  2  │ Document Processing │
+│  Upload   ├─────►   Storage      ├─────►     Service         │
+│           │     │                │     │                     │
+└───────────┘     └────────┬───────┘     └─────────┬───────────┘
+                           │                       │
+                           │                       │
+                           │                       │  ┌───────────────┐
+                           │             3         │  │               │
+                           └───────────────────────┼──► OCR Service   │
+                                                   │  │               │
+                                                   │  └───────┬───────┘
+                                                   │          │
+                  ┌────────────────┐               │          │
+                  │                │      5        │   4      │
+                  │ User Profile   ◄───────────────┴──────────┘
+                  │                │
+                  └────────────────┘
+
+1. User uploads financial document or image
+2. File is temporarily stored
+3. Document Processing Service dispatches to appropriate analyzer
+4. Text is extracted and structured
+5. Relevant financial data is extracted and added to user profile
+                    </pre>
+                </div>
+                
+                <p>These interaction diagrams illustrate the primary data flows within the system. Key aspects include:</p>
+                
+                <ul>
+                    <li><strong>Asynchronous Processing:</strong> Long-running tasks like document analysis are processed asynchronously.</li>
+                    <li><strong>Context Preservation:</strong> User context is maintained across interactions by storing and retrieving conversation history.</li>
+                    <li><strong>Progressive Profiling:</strong> User profiles are continuously enriched based on interactions and provided documents.</li>
+                    <li><strong>LLM Selection:</strong> Different LLMs are selected based on the specific task requirements and availability.</li>
+                </ul>
+            </section>
+            
+            <section id="design-patterns" class="subsection">
+                <h3>1.3 Design Patterns</h3>
+                <p>The application incorporates multiple established design patterns to address common architectural challenges:</p>
+                
+                <h4>1.3.1 Repository Pattern</h4>
+                <p>Used for database interactions, abstracting data access logic from business logic:</p>
+                <pre><code>class UserRepository:
+    def __init__(self, db_session):
+        self.db_session = db_session
+        
+    async def get_by_id(self, user_id: str) -> Optional[User]:
+        return await self.db_session.find_one({"_id": ObjectId(user_id)})
+        
+    async def create(self, user_data: dict) -> User:
+        result = await self.db_session.insert_one(user_data)
+        return await self.get_by_id(result.inserted_id)
+        
+    async def update(self, user_id: str, update_data: dict) -> Optional[User]:
+        await self.db_session.update_one(
+            {"_id": ObjectId(user_id)},
+            {"$set": update_data}
+        )
+        return await self.get_by_id(user_id)
+</code></pre>
+
+                <h4>1.3.2 Factory Pattern</h4>
+                <p>Used for LLM selection and creation based on task requirements and availability:</p>
+                <pre><code>class LLMFactory:
+    @staticmethod
+    def create_llm(llm_type: str, **kwargs) -> BaseLLM:
+        if llm_type == "openai":
+            return OpenAILLM(api_key=settings.OPENAI_API_KEY, **kwargs)
+        elif llm_type == "mistral":
+            return MistralLLM(api_key=settings.MISTRAL_API_KEY, **kwargs)
+        elif llm_type == "huggingface":
+            return HuggingFaceLLM(token=settings.HUGGINGFACE_TOKEN, **kwargs)
+        else:
+            raise ValueError(f"Unsupported LLM type: {llm_type}")
+</code></pre>
+
+                <h4>1.3.3 Strategy Pattern</h4>
+                <p>Used for implementing different recommendation strategies:</p>
+                <pre><code>class RecommendationStrategy(ABC):
+    @abstractmethod
+    async def generate_recommendations(self, user_profile: dict) -> List[Recommendation]:
+        pass
+
+class ConservativeStrategy(RecommendationStrategy):
+    async def generate_recommendations(self, user_profile: dict) -> List[Recommendation]:
+        # Implementation for conservative investors
+        
+class AggressiveStrategy(RecommendationStrategy):
+    async def generate_recommendations(self, user_profile: dict) -> List[Recommendation]:
+        # Implementation for aggressive investors
+        
+class RecommendationEngine:
+    def __init__(self):
+        self.strategies = {
+            "conservative": ConservativeStrategy(),
+            "moderate": ModerateStrategy(),
+            "aggressive": AggressiveStrategy()
+        }
+    
+    async def get_recommendations(self, user_profile: dict) -> List[Recommendation]:
+        risk_profile = user_profile.get("risk_tolerance", "moderate")
+        strategy = self.strategies.get(risk_profile, self.strategies["moderate"])
+        return await strategy.generate_recommendations(user_profile)
+</code></pre>
+
+                <h4>1.3.4 Observer Pattern</h4>
+                <p>Used for events like user profile updates that may trigger multiple actions:</p>
+                <pre><code>class ProfileUpdateEvent:
+    def __init__(self):
+        self._observers = []
+        
+    def register_observer(self, observer):
+        self._observers.append(observer)
+        
+    def notify_observers(self, user_id: str, updated_fields: dict):
+        for observer in self._observers:
+            observer.update(user_id, updated_fields)
+            
+class RecommendationRefresher:
+    def update(self, user_id: str, updated_fields: dict):
+        # Queue a task to refresh recommendations based on profile changes
+        
+class UserActivityLogger:
+    def update(self, user_id: str, updated_fields: dict):
+        # Log the profile update activity
+
+# Usage
+profile_update_event = ProfileUpdateEvent()
+profile_update_event.register_observer(RecommendationRefresher())
+profile_update_event.register_observer(UserActivityLogger())
+
+# When profile is updated
+profile_update_event.notify_observers(user_id, updated_fields)
+</code></pre>
+
+                <h4>1.3.5 Decorator Pattern</h4>
+                <p>Used for adding functionality to API endpoints, such as caching or rate limiting:</p>
+                <pre><code>def cache_response(expiration_seconds: int = 300):
+    def decorator(func):
+        @wraps(func)
+        async def wrapper(*args, **kwargs):
+            # Generate a cache key based on function arguments
+            cache_key = f"{func.__name__}:{hash(str(args))}{hash(str(kwargs))}"
+            
+            # Check if result is in cache
+            cached_result = await redis_client.get(cache_key)
+            if cached_result:
+                return json.loads(cached_result)
+                
+            # Execute function and cache result
+            result = await func(*args, **kwargs)
+            await redis_client.set(
+                cache_key, 
+                json.dumps(result), 
+                expiration_seconds
+            )
+            return result
+        return wrapper
+    return decorator
+
+# Usage on an API endpoint
+@router.get("/products/popular")
+@cache_response(expiration_seconds=3600)  # Cache for 1 hour
+async def get_popular_products():
+    # Implementation that might be expensive to compute
+    return await product_service.get_popular_products()
+</code></pre>
+
+                <h4>1.3.6 Middleware Pattern</h4>
+                <p>Used for cross-cutting concerns like authentication, logging, and error handling:</p>
+                <pre><code>@app.middleware("http")
+async def auth_middleware(request: Request, call_next):
+    # Skip auth for certain endpoints
+    if request.url.path in ["/api/auth/token", "/api/auth/register", "/docs"]:
+        return await call_next(request)
+        
+    # Check for authorization header
+    auth_header = request.headers.get("Authorization")
+    if not auth_header or not auth_header.startswith("Bearer "):
+        return JSONResponse(
+            status_code=401,
+            content={"detail": "Invalid authentication credentials"}
+        )
+        
+    token = auth_header.replace("Bearer ", "")
+    try:
+        payload = jwt.decode(
+            token, 
+            settings.JWT_SECRET, 
+            algorithms=[settings.JWT_ALGORITHM]
+        )
+        request.state.user_id = payload.get("sub")
+    except JWTError:
+        return JSONResponse(
+            status_code=401,
+            content={"detail": "Invalid token or expired token"}
+        )
+        
+    return await call_next(request)
+</code></pre>
+            </section>
+            
+            <section id="tech-stack-details" class="subsection">
+                <h3>1.4 Technology Stack Details</h3>
+                
+                <div class="table-container">
+                    <table>
+                        <tr>
+                            <th>Component</th>
+                            <th>Technology</th>
+                            <th>Version</th>
+                            <th>Purpose</th>
+                            <th>Rationale</th>
+                        </tr>
+                        <tr>
+                            <td>Backend Framework</td>
+                            <td>FastAPI</td>
+                            <td>0.95.x</td>
+                            <td>API development, request handling</td>
+                            <td>High performance with async support, automatic OpenAPI docs, Pydantic validation</td>
+                        </tr>
+                        <tr>
+                            <td>Frontend Framework</td>
+                            <td>React.js</td>
+                            <td>18.x</td>
+                            <td>UI development</td>
+                            <td>Component-based architecture, virtual DOM for performance, strong ecosystem</td>
+                        </tr>
+                        <tr>
+                            <td>UI Components</td>
+                            <td>Material-UI</td>
+                            <td>5.x</td>
+                            <td>Pre-designed components</td>
+                            <td>Professional-looking UI with consistent design, responsive components</td>
+                        </tr>
+                        <tr>
+                            <td>State Management</td>
+                            <td>Redux Toolkit</td>
+                            <td>1.9.x</td>
+                            <td>Global state management</td>
+                            <td>Predictable state updates, middleware support, developer tools</td>
+                        </tr>
+                        <tr>
+                            <td>Primary Database</td>
+                            <td>MongoDB</td>
+                            <td>6.0</td>
+                            <td>Document storage</td>
+                            <td>Schema flexibility for rapidly evolving data models, JSON-like documents</td>
+                        </tr>
+                        <tr>
+                            <td>Vector Database</td>
+                            <td>Pinecone</td>
+                            <td>2.x</td>
+                            <td>Vector embeddings storage</td>
+                            <td>Optimized for similarity search, scalable for large embedding collections</td>
+                        </tr>
+                        <tr>
+                            <td>Caching</td>
+                            <td>Redis</td>
+                            <td>7.0</td>
+                            <td>Caching, rate limiting</td>
+                            <td>In-memory performance, pub/sub capabilities, TTL support</td>
+                        </tr>
+                        <tr>
+                            <td>ML Orchestration</td>
+                            <td>LangChain</td>
+                            <td>0.1.x</td>
+                            <td>LLM chains, RAG implementation</td>
+                            <td>Composable components for LLM applications, abstracts provider-specific details</td>
+                        </tr>
+                        <tr>
+                            <td>LLM Providers</td>
+                            <td>OpenAI, Mistral, Hugging Face</td>
+                            <td>Various</td>
+                            <td>Natural language processing</td>
+                            <td>Multiple providers for redundancy and specialized capabilities</td>
+                        </tr>
+                        <tr>
+                            <td>Authentication</td>
+                            <td>JWT</td>
+                            <td>N/A</td>
+                            <td>User authentication</td>
+                            <td>Stateless authentication, suitable for distributed systems</td>
+                        </tr>
+                        <tr>
+                            <td>Containerization</td>
+                            <td>Docker</td>
+                            <td>24.x</td>
+                            <td>Application containerization</td>
+                            <td>Consistent environments, isolates dependencies</td>
+                        </tr>
+                        <tr>
+                            <td>Orchestration</td>
+                            <td>Kubernetes</td>
+                            <td>1.27</td>
+                            <td>Container orchestration</td>
+                            <td>Automated deployment, scaling, and management of containerized applications</td>
+                        </tr>
+                        <tr>
+                            <td>CI/CD</td>
+                            <td>GitHub Actions</td>
+                            <td>N/A</td>
+                            <td>Continuous integration/deployment</td>
+                            <td>Tight GitHub integration, workflow automation</td>
+                        </tr>
+                        <tr>
+                            <td>Monitoring</td>
+                            <td>Prometheus & Grafana</td>
+                            <td>2.x & 9.x</td>
+                            <td>System monitoring</td>
+                            <td>Time-series data collection, alerting, visualization</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <div class="info">
+                    <p><strong>Technology Selection Criteria:</strong> Technologies were selected based on several factors including performance characteristics, ecosystem maturity, community support, and team expertise. Where possible, open-source technologies were preferred to avoid vendor lock-in, with the exception of certain LLM providers where proprietary solutions currently offer significant advantages in capability and cost-efficiency.</p>
+                </div>
+            </section>
+        </section>
+        
+        <!-- Additional sections will be completed in subsequent edits -->
+        
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Multi-Modal Financial Advisor Chatbot - Technical Architecture Document</p>
+        </div>
+    </footer>
+</body>
+</html> 

@@ -21,6 +21,9 @@ PRESENTATION_PDF="$(pwd)/presentation/financial_advisor_presentation.pdf"
 STUDY_HTML="$(pwd)/presentation/comprehensive_study_document.html"
 STUDY_PDF="$(pwd)/presentation/comprehensive_study_document.pdf"
 
+TECH_HTML="$(pwd)/presentation/technical_architecture_document.html"
+TECH_PDF="$(pwd)/presentation/technical_architecture_document.pdf"
+
 echo "Generating Presentation PDF from HTML..."
 "$CHROME_CMD" --headless --disable-gpu --print-to-pdf="$PRESENTATION_PDF" "$PRESENTATION_HTML"
 
@@ -37,4 +40,13 @@ if [ $? -eq 0 ]; then
     echo "Comprehensive Study Document PDF successfully generated at: $STUDY_PDF"
 else
     echo "Error generating Comprehensive Study Document PDF"
+fi
+
+echo "Generating Technical Architecture Document PDF from HTML..."
+"$CHROME_CMD" --headless --disable-gpu --print-to-pdf="$TECH_PDF" "$TECH_HTML"
+
+if [ $? -eq 0 ]; then
+    echo "Technical Architecture Document PDF successfully generated at: $TECH_PDF"
+else
+    echo "Error generating Technical Architecture Document PDF"
 fi 
